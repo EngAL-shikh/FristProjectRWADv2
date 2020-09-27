@@ -5,13 +5,37 @@
     <string name="FALSE">Fulse</string>
     <string name="nextbt">Next</string>
     <string name="priv">previous</string>
+    <string name="cheat">cheating</string>
+    <string name="answer">answer</string>
+    <string name="showanswer">give me answer</string>
+    <string name="worning">No score will be awarded</string>
 
-    //================Qustions===================
+    //================esyeQustions===================
 
     <string name="fristQ">Sanaa is the capital of Yemen? </string>
     <string name="q2">Taiz is located in Yemen? </string>
     <string name="q3">Cairo is the capital of Egypt</string>
     <string name="q4">Sudan is a European country </string>
+    <string name="q5">The first tea bags were made of silk</string>
+    <string name="q6">The Great Wall of China is visible from space </string>
+
+    //================midQustions===================
+
+    <string name="mid1">Cyclones spin in a clockwise direction in the southern hemisphere </string>
+    <string name="mid2">Goldfish only have a memory of three seconds</string>
+    <string name="mid3">The capital of Libya is Benghazi </string>
+    <string name="mid4">Dolly Parton is the godmother of Miley Cyrus</string>
+    <string name="mid5">Meghan Markle’s first name is Rachel</string>
+    <string name="mid6">Warsaw is the capital of Bulgaria</string>
+
+    //================difQustions===================
+
+    <string name="dif1">Roger Federer has won the most Wimbledon titles of any player</string>
+    <string name="dif2">An octopus has five hearts</string>
+    <string name="dif3">Brazil is the only country in the Americas to have the official language of Portuguese</string>
+    <string name="dif4">The Channel Tunnel is the longest rail tunnel in the world</string>
+    <string name="dif5">A metre is further than a yard</string>
+    <string name="dif6">A woman has walked on the moon</string>
 
     //================ answer message ==============
     <string name="correct">your answer is correct </string>
@@ -20,10 +44,6 @@
     //================ descrptionButton==============
     <string name="despriv">your answer is correct </string>
     <string name="desnext">your answer is false </string>
-
-
-
-
 
 
 </resources>

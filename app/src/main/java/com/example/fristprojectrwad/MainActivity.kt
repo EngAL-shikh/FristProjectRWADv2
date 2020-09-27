@@ -1,50 +1,66 @@
 package com.example.fristprojectrwad
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
+private const val EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true"
+private const val REQUEST_CODE_CHEAT = 0
 class MainActivity : AppCompatActivity() {
-
-    private   val  qustionBank= listOf(
-
-        Qustion(R.string.fristQ,true,""),
-        Qustion(R.string.q2,true,"")  ,
-        Qustion(R.string.q3,true,""),
-        Qustion(R.string.q4,false,"")
+    private val quizViewModel: QuizViewModel by lazy {
+        ViewModelProviders.of(this).get(QuizViewModel::class.java)
+    }
 
 
-    )
+
+   lateinit var cheatButton: Button
+
     var Tanswer:Int=0
     var Fanswer:Int=0
 
-    private var currentIndex = 0
+
+   // private var currentIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var easylistQuesation= arrayListOf<Qustion>()
+        easylistQuesation.addAll(quizViewModel.easyqustionBank)
+        var midlistQuestion=arrayListOf<Qustion>()
+        midlistQuestion.addAll(quizViewModel.midqustionBank)
+        var diflistQuestion=arrayListOf<Qustion>()
+        diflistQuestion.addAll(quizViewModel.difqustionBank)
+
+        randomQustion(easylistQuesation)
+        randomQustion(midlistQuestion)
+        randomQustion(diflistQuestion)
+
+        cheatButton = findViewById(R.id.cheating)
+
+
+
+
+
+
 
 
 //=======================show result====================================
 
         showresult.setOnClickListener {
 
-            if (Fanswer+Tanswer==4){
+
+                Toast.makeText(this,"24/"  +Tanswer, Toast.LENGTH_SHORT).show()
 
 
-
-                Toast.makeText(this,"4/" +Tanswer, Toast.LENGTH_SHORT).show()
-            }
-            if (Tanswer==4){
-
-
-                Toast.makeText(this,"4/"  +Tanswer, Toast.LENGTH_SHORT).show()
-
-            }
 
         }
 
@@ -64,11 +80,15 @@ class MainActivity : AppCompatActivity() {
 
 
         //=======Next quastion=================
+        tv_qustion.setText(quizViewModel.currentQuestionText)
         tv_qustion.setOnClickListener {
 
+
             updateQuestion()
+
         }
-        tv_qustion.setText(qustionBank[0].restTextid)
+
+
 
         bt_next.setOnClickListener {
 
@@ -76,11 +96,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        imnext.setOnClickListener {
-
-            updateQuestion()
-
-        }
 
 
         //=======previous=================
@@ -89,14 +104,19 @@ class MainActivity : AppCompatActivity() {
             privQ()
         }
 
-        imprev.setOnClickListener {
 
-            privQ()
+
+
+
+
+        cheatButton.setOnClickListener {
+            // Start CheatActivity
+
+            val answerIsTrue = quizViewModel.currentQuestionAnswer
+            val intent = CheatActivity.newIntent(this@MainActivity, answerIsTrue)
+            startActivityForResult(intent, REQUEST_CODE_CHEAT)
+
         }
-
-
-
-
 
 
 
@@ -107,36 +127,54 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
+
+
+    //===================== Get random ==============================
+
+    fun randomQustion(list: ArrayList<Qustion>){
+        var random = Random()
+        for (i in 1..2){
+            var randIndex=random.nextInt(list.size)
+            var randItem:Qustion=list.get(randIndex)
+
+            quizViewModel.qustionBank.add(randItem)
+            list.remove(list[randIndex])
+
+        }
+    }
+
     //===================== Next Quastion ===================================
     private fun updateQuestion() {
-
-        if (Fanswer+Tanswer==4){
+        previous.visibility=View.VISIBLE
+        if (Fanswer+Tanswer==24){
 
             showresult.visibility=View.VISIBLE
 
 
         }
-        if (Tanswer==4){
+        if (Tanswer==24){
             showresult.visibility=View.VISIBLE
 
 
 
         }
 
-        if (currentIndex==3){
-            currentIndex=(currentIndex - 4)
+        if (quizViewModel.currentIndex==5){
+            quizViewModel.currentIndex=( quizViewModel.currentIndex - 6)
 
 
         }
 
-        if (qustionBank[currentIndex+1].status=="" ){
+        if (quizViewModel.currentQuestionNextstatus=="" ){
             bt_false.isClickable=true
             bt_true.isClickable=true
             bt_true.setBackgroundResource(R.drawable.trueshape)
             bt_false.setBackgroundResource(R.drawable.falseshape)
 
-            currentIndex = (currentIndex + 1) % qustionBank.size
-            val questionTextResId = qustionBank[currentIndex].restTextid
+              quizViewModel.moveToNext()
+            val questionTextResId = quizViewModel.currentQuestionText
             tv_qustion.setText(questionTextResId)
             tv_qustion.setBackgroundResource(R.drawable.qshape)
         }else{
@@ -145,9 +183,9 @@ class MainActivity : AppCompatActivity() {
             bt_true.isClickable=false
             bt_true.setBackgroundResource(R.drawable.answerd)
             bt_false.setBackgroundResource(R.drawable.answerd)
-            currentIndex = (currentIndex + 1) % qustionBank.size
-            val questionTextResId = qustionBank[currentIndex].restTextid
-            tv_qustion.setText(questionTextResId)
+            quizViewModel.moveToNext()
+
+            tv_qustion.setText(quizViewModel.currentQuestionText)
             tv_qustion.setBackgroundResource(R.drawable.qshape)
         }
         }
@@ -158,26 +196,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun privQ() {
 
-        if (currentIndex==0){
-            currentIndex=(currentIndex + 4)
+        if (quizViewModel.currentIndex==0){
+            quizViewModel.currentIndex=( quizViewModel.currentIndex + 6)
 
 
         }
 
-        if (qustionBank[currentIndex-1].status=="" ){
+        if (quizViewModel.currentQuestionprivstatus=="" ){
 
 
             bt_false.isClickable=true
             bt_true.isClickable=true
             bt_true.setBackgroundResource(R.drawable.trueshape)
             bt_false.setBackgroundResource(R.drawable.falseshape)
-            if (currentIndex==0){
-                currentIndex=(currentIndex + 4)
+            if (quizViewModel.currentIndex==0){
+                quizViewModel.currentIndex=(quizViewModel.currentIndex + 6)
 
 
             }
-            currentIndex = (currentIndex - 1) % qustionBank.size
-            val questionTextResId = qustionBank[currentIndex].restTextid
+             quizViewModel.moveToPriv()
+            val questionTextResId = quizViewModel.currentQuestionText
             tv_qustion.setText(questionTextResId)
             tv_qustion.setBackgroundResource(R.drawable.qshape)
 
@@ -189,8 +227,8 @@ class MainActivity : AppCompatActivity() {
             bt_false.setBackgroundResource(R.drawable.answerd)
 
 
-            currentIndex = (currentIndex - 1) % qustionBank.size
-            val questionTextResId = qustionBank[currentIndex].restTextid
+            quizViewModel.moveToPriv()
+            val questionTextResId = quizViewModel.currentQuestionText
             tv_qustion.setText(questionTextResId)
             tv_qustion.setBackgroundResource(R.drawable.qshape)
 
@@ -207,38 +245,61 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer: Boolean) {
 
-
-        val correctAnswer = qustionBank[currentIndex].answer
-        if (userAnswer == correctAnswer) {
-
-
-
-            qustionBank[currentIndex].status="1"
-
-            Toast.makeText(this, R.string.correct, Toast.LENGTH_SHORT).show()
-            tv_qustion.setBackgroundResource(R.drawable.qtrue)
-            bt_true.setBackgroundResource(R.drawable.answerd)
-            bt_false.setBackgroundResource(R.drawable.answerd)
-            bt_false.isClickable=false
-            bt_true.isClickable=false
-
-                Tanswer++
+        val correctAnswer = quizViewModel.currentQuestionAnswer
+        val messageResId = when {
+            quizViewModel.isCheater -> {
 
 
+                quizViewModel.addtoStatus("1")
+
+                Toast.makeText(this, R.string.correct, Toast.LENGTH_SHORT).show()
+                tv_qustion.setBackgroundResource(R.drawable.qtrue)
+                bt_true.setBackgroundResource(R.drawable.answerd)
+                bt_false.setBackgroundResource(R.drawable.answerd)
+                bt_false.isClickable=false
+                bt_true.isClickable=false
 
 
-        } else {
+            }
 
-            qustionBank[currentIndex].status="0"
 
-            bt_false.isClickable=false
-            bt_true.isClickable=false
-            bt_true.setBackgroundResource(R.drawable.answerd)
-            bt_false.setBackgroundResource(R.drawable.answerd)
-            Fanswer++
-            Toast.makeText(this, R.string.False, Toast.LENGTH_SHORT).show()
 
-            tv_qustion.setBackgroundResource(R.drawable.qfalse)
+            userAnswer == correctAnswer -> {
+
+
+                quizViewModel.addtoStatus("1")
+
+                Toast.makeText(this, R.string.correct, Toast.LENGTH_SHORT).show()
+                tv_qustion.setBackgroundResource(R.drawable.qtrue)
+                bt_true.setBackgroundResource(R.drawable.answerd)
+                bt_false.setBackgroundResource(R.drawable.answerd)
+                bt_false.isClickable=false
+                bt_true.isClickable=false
+
+                Tanswer+=quizViewModel.currentQuestionDegree
+
+            }
+
+
+
+
+
+
+            else -> {
+
+                quizViewModel.addtoStatus("0")
+
+                bt_false.isClickable=false
+                bt_true.isClickable=false
+                bt_true.setBackgroundResource(R.drawable.answerd)
+                bt_false.setBackgroundResource(R.drawable.answerd)
+
+                Toast.makeText(this, R.string.False, Toast.LENGTH_SHORT).show()
+
+                tv_qustion.setBackgroundResource(R.drawable.qfalse)
+
+            }
+
 
         }
 
@@ -248,5 +309,23 @@ class MainActivity : AppCompatActivity() {
 
 
 
+
+
+
+
+
     }
+
+    override fun onActivityResult(requestCode: Int,
+                                  resultCode: Int,
+                                  data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode != Activity.RESULT_OK) {
+            return
+        }
+        if (requestCode == REQUEST_CODE_CHEAT) {
+            quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+        }
+    }
+
 }
