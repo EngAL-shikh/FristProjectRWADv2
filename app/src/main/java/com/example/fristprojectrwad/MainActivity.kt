@@ -2,12 +2,15 @@ package com.example.fristprojectrwad
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -19,31 +22,21 @@ class MainActivity : AppCompatActivity() {
         ViewModelProviders.of(this).get(QuizViewModel::class.java)
     }
 
-
-
    lateinit var cheatButton: Button
-
     var Tanswer:Int=0
-    var Fanswer:Int=0
-
-
-   // private var currentIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         var easylistQuesation= arrayListOf<Qustion>()
         easylistQuesation.addAll(quizViewModel.easyqustionBank)
         var midlistQuestion=arrayListOf<Qustion>()
         midlistQuestion.addAll(quizViewModel.midqustionBank)
         var diflistQuestion=arrayListOf<Qustion>()
         diflistQuestion.addAll(quizViewModel.difqustionBank)
-
         randomQustion(easylistQuesation)
         randomQustion(midlistQuestion)
         randomQustion(diflistQuestion)
-
         cheatButton = findViewById(R.id.cheating)
 
 
@@ -53,16 +46,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-//=======================show result====================================
-
-        showresult.setOnClickListener {
-
-
-                Toast.makeText(this,"24/"  +Tanswer, Toast.LENGTH_SHORT).show()
-
-
-
-        }
 
 
 
@@ -147,20 +130,8 @@ class MainActivity : AppCompatActivity() {
 
     //===================== Next Quastion ===================================
     private fun updateQuestion() {
+
         previous.visibility=View.VISIBLE
-        if (Fanswer+Tanswer==24){
-
-            showresult.visibility=View.VISIBLE
-
-
-        }
-        if (Tanswer==24){
-            showresult.visibility=View.VISIBLE
-
-
-
-        }
-
         if (quizViewModel.currentIndex==5){
             quizViewModel.currentIndex=( quizViewModel.currentIndex - 6)
 
@@ -269,7 +240,7 @@ class MainActivity : AppCompatActivity() {
 
                 quizViewModel.addtoStatus("1")
 
-                Toast.makeText(this, R.string.correct, Toast.LENGTH_SHORT).show()
+
                 tv_qustion.setBackgroundResource(R.drawable.qtrue)
                 bt_true.setBackgroundResource(R.drawable.answerd)
                 bt_false.setBackgroundResource(R.drawable.answerd)
@@ -277,6 +248,8 @@ class MainActivity : AppCompatActivity() {
                 bt_true.isClickable=false
 
                 Tanswer+=quizViewModel.currentQuestionDegree
+                score.text=Tanswer.toString()
+
 
             }
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,69 +10,60 @@
 
     <TextView
         android:id="@+id/tv_qustion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_width="355dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="220dp"
         android:background="@drawable/qshape"
+        android:gravity="center"
         android:text="@string/qustion"
         android:textColor="#ffff"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/bt_true"
-        android:layout_width="124dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="116dp"
-        android:layout_weight="1"
-        android:background="@drawable/trueshape"
-        android:text="@string/TRUE"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_qustion" />
-
-    <Button
+    <ImageButton
         android:id="@+id/bt_next"
-        android:layout_width="125dp"
+        android:layout_width="50dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/nextshape"
         android:drawableRight="@drawable/next"
-        android:text="@string/nextbt"
+        android:elevation="2dp"
+        android:src="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintHorizontal_bias="0.57"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_false"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.042" />
 
-    <Button
+    <ImageButton
         android:id="@+id/previous"
 
-        android:layout_width="125dp"
+        android:layout_width="50dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/priv"
         android:drawableLeft="@drawable/previous_24dp"
+        android:src="@drawable/previous_24dp"
         android:text="@string/priv"
         android:visibility="gone"
+        android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.396"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_true"
-        app:layout_constraintVertical_bias="0.039" />
+        app:layout_constraintVertical_bias="0.042" />
 
     <Button
         android:id="@+id/cheating"
 
         android:layout_width="125dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="56dp"
         android:background="@drawable/priv"
         android:drawableLeft="@drawable/cheatingicon_24dp"
         android:text="@string/cheat"
@@ -79,32 +71,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bt_next" />
 
-    <TextView
-        android:id="@+id/showresult"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/trueshape"
-        android:fontFamily="@font/gg"
-        android:gravity="center"
-        android:text="عرض النتيجة "
-        android:textColor="#ffff"
-        android:textSize="20sp"
-        android:textStyle="bold"
-
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cheating"
-        app:layout_constraintVertical_bias="0.0" />
-
     <Button
         android:id="@+id/bt_false"
         android:layout_width="125dp"
         android:layout_height="48dp"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="32dp"
         android:layout_weight="1"
         android:background="@drawable/falseshape"
         android:text="@string/FALSE"
@@ -113,7 +84,69 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.746"
         app:layout_constraintStart_toEndOf="@+id/bt_true"
-        app:layout_constraintTop_toBottomOf="@+id/tv_qustion" /><![CDATA[
+        app:layout_constraintTop_toBottomOf="@+id/tv_qustion" />
+
+    <Button
+        android:id="@+id/bt_true"
+        android:layout_width="124dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_weight="1"
+        android:background="@drawable/trueshape"
+        android:text="@string/TRUE"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_qustion" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00"
+        android:textSize="100sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="87dp"
+        android:orientation="horizontal"
+        android:background="@drawable/appbar"
+        android:elevation="5dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+
+
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/minu">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="GeoQuiz"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            >
+
+        </TextView>
+
+    </LinearLayout><![CDATA[
+
+
 
 
 
@@ -128,6 +161,7 @@
 
 
     app:layout_constraintTop_toBottomOf="@+id/previous" />
+
 
 
 
