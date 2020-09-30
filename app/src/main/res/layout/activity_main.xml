@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F3F1EA"
+    android:background="#ffff"
     tools:context=".MainActivity">
 
     <TextView
@@ -47,10 +47,10 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/priv"
         android:drawableLeft="@drawable/previous_24dp"
+        android:elevation="2dp"
         android:src="@drawable/previous_24dp"
         android:text="@string/priv"
-        android:visibility="gone"
-        android:elevation="2dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.396"
@@ -117,9 +117,9 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="87dp"
-        android:orientation="horizontal"
         android:background="@drawable/appbar"
         android:elevation="5dp"
+        android:orientation="horizontal"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -140,13 +140,38 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="GeoQuiz"
-            android:textStyle="bold"
             android:textSize="30sp"
-            >
+            android:textStyle="bold">
 
         </TextView>
 
-    </LinearLayout><![CDATA[
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/cheatingCont"
+        android:layout_width="121dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="You have 3 chances "
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheating" />
+
+    <TextView
+        android:id="@+id/api"
+        android:layout_width="121dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="140dp"
+        android:gravity="center"
+        android:text="APILevel"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cheating" /><![CDATA[
 
 
 

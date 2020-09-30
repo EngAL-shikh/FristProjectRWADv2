@@ -2,7 +2,11 @@ package com.example.fristprojectrwad
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Color.BLACK
 import android.graphics.Typeface
+import android.media.MediaPlayer
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -32,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val apii = Build.VERSION.SDK_INT
+        api.text="API ="+apii.toString()
 
 
         var easylistQuesation= arrayListOf<Qustion>()
@@ -243,6 +249,8 @@ class MainActivity : AppCompatActivity() {
 
             userAnswer == correctAnswer -> {
 
+                var truesound=MediaPlayer.create(this,R.raw.s)
+                truesound.start()
 
                 quizViewModel.addtoStatus("1")
 
@@ -265,7 +273,8 @@ class MainActivity : AppCompatActivity() {
 
 
             else -> {
-
+                var truesound=MediaPlayer.create(this,R.raw.falsesound)
+                truesound.start()
                 quizViewModel.addtoStatus("0")
 
                 bt_false.isClickable=false
@@ -309,10 +318,22 @@ class MainActivity : AppCompatActivity() {
 
             ch1=data!!.extras!!.getInt("ch1")
             Log.d("ch1",ch1.toString())
-            if (ch1==2){
+            if (ch1==0){
 
+                cheatingCont.text="You have 2 chances left"
+            }else if (ch1==1){
+                cheatingCont.text="You have 1 chances left"
+
+            }else{
                 cheating.isClickable=false
+
+                cheatingCont.text="You finished all chances"
+
+
+
+
             }
+
 
         }
     }
