@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 private const val TAG = "QuizViewModel"
 class QuizViewModel : ViewModel() {
     var currentIndex = 0
+    var cheatNum:Int=0
 
    val  qustionBank= mutableListOf<Qustion>(
 
@@ -41,6 +42,9 @@ class QuizViewModel : ViewModel() {
 
 
     )
+
+
+
     val currentQuestionAnswer: Boolean
         get() = qustionBank[currentIndex].answer
     val currentQuestionText: Int
@@ -56,22 +60,28 @@ class QuizViewModel : ViewModel() {
     val  currentQuestionDegree:Int
         get()=qustionBank[currentIndex].Degree
 
+    val  ch:Int
+        get()=cheatNum++
+
+
+    fun cheatNum(aa:Int){
+
+        cheatNum=aa
+    }
+
     var isCheater:Boolean
+
         get()=qustionBank[currentIndex].isCheater
+
         set(value) {
 
             qustionBank[currentIndex].isCheater=true
+
         }
 
 
 
 
-    fun  random(){
-
-        var random= (1 until easyqustionBank.size).random()
-        var a=easyqustionBank[random]
-
-    }
 
     fun addtoStatus( s:String){
 
@@ -87,6 +97,8 @@ class QuizViewModel : ViewModel() {
 
         currentIndex = (currentIndex - 1) % qustionBank.size
     }
+
+
 
 
 

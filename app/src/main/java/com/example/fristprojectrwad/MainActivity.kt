@@ -5,11 +5,13 @@ import android.content.Intent
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.activity_cheat.*
 
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -17,6 +19,7 @@ import kotlin.collections.ArrayList
 
 private const val EXTRA_ANSWER_IS_TRUE = "com.bignerdranch.android.geoquiz.answer_is_true"
 private const val REQUEST_CODE_CHEAT = 0
+
 class MainActivity : AppCompatActivity() {
     private val quizViewModel: QuizViewModel by lazy {
         ViewModelProviders.of(this).get(QuizViewModel::class.java)
@@ -24,10 +27,13 @@ class MainActivity : AppCompatActivity() {
 
    lateinit var cheatButton: Button
     var Tanswer:Int=0
+    var ch1=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         var easylistQuesation= arrayListOf<Qustion>()
         easylistQuesation.addAll(quizViewModel.easyqustionBank)
         var midlistQuestion=arrayListOf<Qustion>()
@@ -293,11 +299,21 @@ class MainActivity : AppCompatActivity() {
                                   resultCode: Int,
                                   data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         if (resultCode != Activity.RESULT_OK) {
             return
         }
         if (requestCode == REQUEST_CODE_CHEAT) {
+
             quizViewModel.isCheater = data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+
+            ch1=data!!.extras!!.getInt("ch1")
+            Log.d("ch1",ch1.toString())
+            if (ch1==2){
+
+                cheating.isClickable=false
+            }
+
         }
     }
 
